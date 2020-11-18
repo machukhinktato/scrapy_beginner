@@ -13,4 +13,4 @@ if __name__ =='__main__':
     process.crawl(HhruSpider)
     # process.crawl(SjruSpider)
 
-    process.start()
+process.start()
