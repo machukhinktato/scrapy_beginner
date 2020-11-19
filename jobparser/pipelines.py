@@ -14,10 +14,12 @@ class JobparserPipeline:
     def __init__(self):
         client = MongoClient('localhost',27017)
         self.mongo_base = client.vacansy1911
+        print()
 
 
     def process_item(self, item, spider):
         collection = self.mongo_base[spider.name]
+        item['_id'] = collection.count_documents({}) + 1
         collection.insert_one(item)
         # if spider.name == 'hhru':
         #     self.process_salary_hh(item['salary'])

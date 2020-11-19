@@ -19,10 +19,20 @@ class HhruSpider(scrapy.Spider):
 
     def vacancy_parse(self,response:HtmlResponse):
         name = response.xpath("//h1/text()").extract_first()
-        salary = response.xpath("//p/span[@data-qa='bloko-header-2']/text()").extract()
-        if len(salary) == 5:
-            min_salary = salary[1].replace('\xa0', '')
-            max_salary = salary[3].replace('\xa0', '')
+        # salary = response.xpath("//p/span[@data-qa='bloko-header-2']/text()").extract()
+        # salary = response.xpath("//p/span[@data-qa='bloko-header-2']/text()").extract()
+        min_salary = response.xpath("//p/span[@data-qa='bloko-header-2']/text()").extract()
+        try:
+            max_salary = [min_salary[3] if 'до ' in min_salary[2] else None]
+        except:
+            if 'до ' in min_salary[0]:
+                max_salary = min_salary[1]
+            else:
+                max_salary = None
+        min_salary = [min_salary[1] if 'от ' in min_salary else None]
+        # if len(salary) == 5:
+        #     min_salary = salary[1].replace('\xa0', '')
+        #     max_salary = salary[3].replace('\xa0', '')
         link = response._url
 
         print()
