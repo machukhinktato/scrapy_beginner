@@ -1,5 +1,7 @@
 import scrapy
-
+from scrapy.http import HtmlResponse
+from jobparser.items import JobparserItem
+from .variables import *
 
 class SjruSpider(scrapy.Spider):
     name = 'sjru'
