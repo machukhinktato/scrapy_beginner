@@ -11,22 +11,23 @@ class HhruSpider(scrapy.Spider):
 
     def parse(self, response: HtmlResponse):
         links = response.xpath("//a[@class='bloko-link HH-LinkModifier']/@href").extract()
-        next_page = response.xpath("//a[contains(@class,'HH-Pager-Controls-Next')]/@href").extract_first()
+        # next_page = response.xpath("//a[contains(@class,'HH-Pager-Controls-Next')]/@href").extract_first()
         for link in links:
             yield response.follow(link, callback=self.vacancy_parse)
-        if next_page:
-            yield response.follow(next_page, callback=self.parse)
+        # if next_page:
+        #     yield response.follow(next_page, callback=self.parse)
 
     def vacancy_parse(self, response: HtmlResponse):
         name = response.xpath("//h1/text()").extract_first()
         min_salary = response.xpath("//p/span[@data-qa='bloko-header-2']/text()").extract()
+        max_salary = None
         try:
-            max_salary = [min_salary[3] if 'до ' in min_salary[2] else None]
-        except:
-            if 'до ' in min_salary[0]:
+            if 'до ' in min_salary[2]:
+                max_salary = min_salary[3]
+            elif 'до ' in min_salary[0]:
                 max_salary = min_salary[1]
-            else:
-                max_salary = None
+        except:
+            max_salary = None
         min_salary = [min_salary[1] if 'от ' in min_salary else None]
         link = response._url
 
