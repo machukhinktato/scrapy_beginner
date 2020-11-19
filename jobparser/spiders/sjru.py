@@ -18,7 +18,8 @@ class SjruSpider(scrapy.Spider):
 
 
     def vacancy_parse(self, response:HtmlResponse):
-        name = response.xpath(sj_name)
-        salary = response.xpath(sj_salary).extract
+        name = response.xpath(sj_name).extract_first()
+        min_salary = response.xpath(sj_salary).extract()
         link = response._url
         print()
+        yield JobparserItem(name=name, min_salary=min_salary, link=link)
