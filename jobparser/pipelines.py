@@ -19,7 +19,10 @@ class JobparserPipeline:
 
     def process_item(self, item, spider):
         collection = self.mongo_base[spider.name]
-        item['_id'] = collection.count_documents({}) + 1
+        try:
+            item['_id'] = collection.count_documents({}) + 1
+        except:
+            item['_id'] = 1
         collection.insert_one(item)
         # if spider.name == 'hhru':
         #     self.process_salary_hh(item['salary'])

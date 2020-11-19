@@ -1,7 +1,7 @@
 import scrapy
 from scrapy.http import HtmlResponse
 from jobparser.items import JobparserItem
-
+from .variables import *
 
 class HhruSpider(scrapy.Spider):
     name = 'hhru'
@@ -18,8 +18,8 @@ class HhruSpider(scrapy.Spider):
         #     yield response.follow(next_page, callback=self.parse)
 
     def vacancy_parse(self, response: HtmlResponse):
-        name = response.xpath("//h1/text()").extract_first()
-        min_salary = response.xpath("//p/span[@data-qa='bloko-header-2']/text()").extract()
+        name = response.xpath(hh_name).extract_first()
+        min_salary = response.xpath(hh_salary).extract()
         max_salary = None
         try:
             if 'до ' in min_salary[2]:
@@ -28,7 +28,7 @@ class HhruSpider(scrapy.Spider):
                 max_salary = min_salary[1]
         except:
             max_salary = None
-        min_salary = [min_salary[1] if 'от ' in min_salary else None]
+        min_salary = [min_salary[1] if 'от ' in min_salary else None][0]
         link = response._url
 
         print()
