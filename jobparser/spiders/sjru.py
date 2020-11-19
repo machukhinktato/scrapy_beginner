@@ -12,11 +12,13 @@ class SjruSpider(scrapy.Spider):
     def parse(self, response:HtmlResponse):
         url = 'https://www.superjob.ru'
         links = response.xpath("//a[contains(@class, 'icMQ_ _6AfZ9')]/@href").extract()
-        # for link in links:
-        #     yield response.follow(url + link, callback=self.vacancy_parse)
+        for link in links:
+            yield response.follow(url + link, callback=self.vacancy_parse)
         print()
 
 
     def vacancy_parse(self, response:HtmlResponse):
-        # name = response.
-        pass
+        name = response.xpath(sj_name)
+        salary = response.xpath(sj_salary).extract
+        link = response._url
+        print()
