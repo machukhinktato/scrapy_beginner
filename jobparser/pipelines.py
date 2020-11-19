@@ -13,7 +13,7 @@ from pymongo import MongoClient
 class JobparserPipeline:
     def __init__(self):
         client = MongoClient('localhost',27017)
-        self.mongo_base = client.vacansy2710
+        self.mongo_base = client.vacansy1911
 
 
     def process_item(self, item, spider):
