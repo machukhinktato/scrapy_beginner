@@ -29,7 +29,7 @@ class HhruSpider(scrapy.Spider):
         except:
             max_salary = None
         min_salary = [min_salary[1] if 'от ' in min_salary else None][0]
-        link = response._url
+        link = response.url
 
         print()
         yield JobparserItem(name=name, min_salary=min_salary, max_salary=max_salary, link=link)
