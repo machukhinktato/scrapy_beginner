@@ -7,9 +7,9 @@ from .variables import *
 class SjruSpider(scrapy.Spider):
     name = 'sjru'
     allowed_domains = ['superjob.ru']
-    # start_urls = ['https://www.superjob.ru/vacancy/search/?keywords=python&geo%5Bt%5D%5B0%5D=4']
-    # start_urls = ['https://www.superjob.ru/vakansii/testirovshik.html?geo%5Bt%5D%5B0%5D=4']
-    start_urls = ['https://www.superjob.ru/vakansii/testirovschik.html?geo%5Bt%5D%5B0%5D=4']
+    start_urls = ['https://www.superjob.ru/vacancy/search/?keywords=python&geo%5Bt%5D%5B0%5D=4']
+    # start_urls = ['https://www.superjob.ru/vakansii/povar.html?geo%5Bt%5D%5B0%5D=4']
+    # start_urls = ['https://www.superjob.ru/vakansii/testirovschik.html?geo%5Bt%5D%5B0%5D=4']
 
     def parse(self, response: HtmlResponse):
         links = response.xpath("//a[contains(@class, 'icMQ_ _6AfZ9')]/@href")

@@ -24,13 +24,6 @@ class JobparserPipeline:
         except:
             item['_id'] = 1
         collection.insert_one(item)
-        # if spider.name == 'hhru':
-        #     self.process_salary_hh(item['salary'])
-
 
         print()
         return item
-
-    # def process_salary(self,salary):
-    #
-    #     return salary_min, salary_max, currency
