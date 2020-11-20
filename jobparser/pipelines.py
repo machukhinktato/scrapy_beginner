@@ -9,13 +9,10 @@ from itemadapter import ItemAdapter
 from pymongo import MongoClient
 
 
-
 class JobparserPipeline:
     def __init__(self):
-        client = MongoClient('localhost',27017)
+        client = MongoClient('localhost', 27017)
         self.mongo_base = client.vacansy1911
-        print()
-
 
     def process_item(self, item, spider):
         collection = self.mongo_base[spider.name]
@@ -25,5 +22,4 @@ class JobparserPipeline:
             item['_id'] = 1
         collection.insert_one(item)
 
-        print()
         return item

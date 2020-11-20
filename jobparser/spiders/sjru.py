@@ -8,8 +8,6 @@ class SjruSpider(scrapy.Spider):
     name = 'sjru'
     allowed_domains = ['superjob.ru']
     start_urls = ['https://www.superjob.ru/vacancy/search/?keywords=python&geo%5Bt%5D%5B0%5D=4']
-    # start_urls = ['https://www.superjob.ru/vakansii/povar.html?geo%5Bt%5D%5B0%5D=4']
-    # start_urls = ['https://www.superjob.ru/vakansii/testirovschik.html?geo%5Bt%5D%5B0%5D=4']
 
     def parse(self, response: HtmlResponse):
         links = response.xpath("//a[contains(@class, 'icMQ_ _6AfZ9')]/@href")
@@ -18,7 +16,6 @@ class SjruSpider(scrapy.Spider):
             yield response.follow(link, callback=self.vacancy_parse)
         if next_page:
             yield response.follow(next_page, callback=self.parse)
-
 
     def vacancy_parse(self, response: HtmlResponse):
         min_salary, max_salary = locals()
@@ -39,5 +36,4 @@ class SjruSpider(scrapy.Spider):
                 min_salary = min_salary[2].replace('\xa0', '').split('руб.')[0]
         link = response.url
 
-        print()
         yield JobparserItem(name=name, min_salary=min_salary, max_salary=max_salary, link=link)
