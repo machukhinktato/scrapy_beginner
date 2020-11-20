@@ -3,6 +3,7 @@ from scrapy.http import HtmlResponse
 from jobparser.items import JobparserItem
 from .variables import *
 
+
 class HhruSpider(scrapy.Spider):
     name = 'hhru'
     allowed_domains = ['hh.ru']
@@ -23,12 +24,12 @@ class HhruSpider(scrapy.Spider):
         max_salary = None
         try:
             if 'до ' in min_salary[2]:
-                max_salary = min_salary[3]
+                max_salary = min_salary[3].replace('\xa0', '')
             elif 'до ' in min_salary[0]:
-                max_salary = min_salary[1]
+                max_salary = min_salary[1].replace('\xa0', '')
         except:
             max_salary = None
-        min_salary = [min_salary[1] if 'от ' in min_salary else None][0]
+        min_salary = [min_salary[1].replace('\xa0', '') if 'от ' in min_salary else None][0]
         link = response.url
 
         print()
