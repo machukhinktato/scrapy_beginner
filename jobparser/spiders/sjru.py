@@ -13,10 +13,11 @@ class SjruSpider(scrapy.Spider):
 
     def parse(self, response: HtmlResponse):
         links = response.xpath("//a[contains(@class, 'icMQ_ _6AfZ9')]/@href")
-        # print()
+        next_page = response.xpath("//a[contains(@class, 'f-test-button-dalshe')]/@href")
         for link in links:
             yield response.follow(link, callback=self.vacancy_parse)
-
+        for page in next_page:
+            yield response.follow(page, callback=self.parse)
     def vacancy_parse(self, response: HtmlResponse):
         min_salary, max_salary = locals()
         name = response.xpath(sj_name).extract_first()
